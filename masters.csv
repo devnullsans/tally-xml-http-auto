@@ -10,3 +10,9 @@ Input CGST @18%,Duties & Taxes,0,-,-,-,-,-,-,-,-,-,-
 Output CGST @18%,Duties & Taxes,0,-,-,-,-,-,-,-,-,-,-
 Input SGST @18%,Duties & Taxes,0,-,-,-,-,-,-,-,-,-,-
 Output SGST @18%,Duties & Taxes,0,-,-,-,-,-,-,-,-,-,-
+ICICI Bank,Bank Accounts,0,-,-,-,-,-,-,-,-,-,-
+Purchase,Purchase Accounts,0,-,-,-,-,-,-,-,-,-,-
+Sales,Sales Accounts,0,-,-,-,-,-,-,-,-,-,-
+Axis Bank,Bank Accounts,0,-,-,-,-,-,-,-,-,-,-
+Purchase Return,Purchase Accounts,0,-,-,-,-,-,-,-,-,-,-
+Sales Return,Sales Accounts,0,-,-,-,-,-,-,-,-,-,-
