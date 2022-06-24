@@ -17,7 +17,7 @@ def convert_row(row):
 
     if row.voucher_type == 'Receipt' or row.voucher_type == 'Purchase' or row.voucher_type == 'Contra' or row.voucher_type == 'Credit Note':
 
-        if row.cr_ledger_a != '-':
+        if 'cr_ledger_a' in row and row.cr_ledger_a != '-':
             xml_row += f"""
                     <ALLLEDGERENTRIES.LIST>
                         <LEDGERNAME>{escape(row.cr_ledger_a)}</LEDGERNAME>
@@ -26,7 +26,7 @@ def convert_row(row):
                     </ALLLEDGERENTRIES.LIST>
 """
 
-        if row.cr_ledger_b != '-':
+        if 'cr_ledger_b' in row and row.cr_ledger_b != '-':
             xml_row += f"""
                     <ALLLEDGERENTRIES.LIST>
                         <LEDGERNAME>{escape(row.cr_ledger_b)}</LEDGERNAME>
@@ -35,7 +35,7 @@ def convert_row(row):
                     </ALLLEDGERENTRIES.LIST>
 """
 
-        if row.cr_ledger_c != '-':
+        if 'cr_ledger_c' in row and row.cr_ledger_c != '-':
             xml_row += f"""
                     <ALLLEDGERENTRIES.LIST>
                         <LEDGERNAME>{escape(row.cr_ledger_c)}</LEDGERNAME>
@@ -44,7 +44,7 @@ def convert_row(row):
                     </ALLLEDGERENTRIES.LIST>
 """
 
-        if row.cr_ledger_d != '-':
+        if 'cr_ledger_d' in row and row.cr_ledger_d != '-':
             xml_row += f"""
                     <ALLLEDGERENTRIES.LIST>
                         <LEDGERNAME>{escape(row.cr_ledger_d)}</LEDGERNAME>
@@ -53,7 +53,7 @@ def convert_row(row):
                     </ALLLEDGERENTRIES.LIST>
 """
 
-        if row.cr_ledger_e != '-':
+        if 'cr_ledger_e' in row and row.cr_ledger_e != '-':
             xml_row += f"""
                     <ALLLEDGERENTRIES.LIST>
                         <LEDGERNAME>{escape(row.cr_ledger_e)}</LEDGERNAME>
@@ -62,7 +62,7 @@ def convert_row(row):
                     </ALLLEDGERENTRIES.LIST>
 """
 
-        if row.dr_ledger_a != '-':
+        if 'dr_ledger_a' in row and row.dr_ledger_a != '-':
             xml_row += f"""
                     <ALLLEDGERENTRIES.LIST>
                         <LEDGERNAME>{escape(row.dr_ledger_a)}</LEDGERNAME>
@@ -71,7 +71,7 @@ def convert_row(row):
                     </ALLLEDGERENTRIES.LIST>
 """
 
-        if row.dr_ledger_b != '-':
+        if 'dr_ledger_b' in row and row.dr_ledger_b != '-':
             xml_row += f"""
                     <ALLLEDGERENTRIES.LIST>
                         <LEDGERNAME>{escape(row.dr_ledger_b)}</LEDGERNAME>
@@ -80,7 +80,7 @@ def convert_row(row):
                     </ALLLEDGERENTRIES.LIST>
 """
 
-        if row.dr_ledger_c != '-':
+        if 'dr_ledger_c' in row and row.dr_ledger_c != '-':
             xml_row += f"""
                     <ALLLEDGERENTRIES.LIST>
                         <LEDGERNAME>{escape(row.dr_ledger_c)}</LEDGERNAME>
@@ -89,7 +89,7 @@ def convert_row(row):
                     </ALLLEDGERENTRIES.LIST>
 """
 
-        if row.dr_ledger_d != '-':
+        if 'dr_ledger_d' in row and row.dr_ledger_d != '-':
             xml_row += f"""
                     <ALLLEDGERENTRIES.LIST>
                         <LEDGERNAME>{escape(row.dr_ledger_d)}</LEDGERNAME>
@@ -98,7 +98,7 @@ def convert_row(row):
                     </ALLLEDGERENTRIES.LIST>
 """
 
-        if row.dr_ledger_e != '-':
+        if 'dr_ledger_e' in row and row.dr_ledger_e != '-':
             xml_row += f"""
                     <ALLLEDGERENTRIES.LIST>
                         <LEDGERNAME>{escape(row.dr_ledger_e)}</LEDGERNAME>
@@ -109,7 +109,7 @@ def convert_row(row):
 
     elif row.voucher_type == 'Sales' or row.voucher_type == 'Payment' or row.voucher_type == 'Journal' or row.voucher_type == 'Debit Note':
 
-        if row.dr_ledger_a != '-':
+        if 'dr_ledger_a' in row and row.dr_ledger_a != '-':
             xml_row += f"""
                     <ALLLEDGERENTRIES.LIST>
                         <LEDGERNAME>{escape(row.dr_ledger_a)}</LEDGERNAME>
@@ -118,7 +118,7 @@ def convert_row(row):
                     </ALLLEDGERENTRIES.LIST>
 """
 
-        if row.dr_ledger_b != '-':
+        if 'dr_ledger_b' in row and row.dr_ledger_b != '-':
             xml_row += f"""
                     <ALLLEDGERENTRIES.LIST>
                         <LEDGERNAME>{escape(row.dr_ledger_b)}</LEDGERNAME>
@@ -127,7 +127,7 @@ def convert_row(row):
                     </ALLLEDGERENTRIES.LIST>
 """
 
-        if row.dr_ledger_c != '-':
+        if 'dr_ledger_c' in row and row.dr_ledger_c != '-':
             xml_row += f"""
                     <ALLLEDGERENTRIES.LIST>
                         <LEDGERNAME>{escape(row.dr_ledger_c)}</LEDGERNAME>
@@ -136,7 +136,7 @@ def convert_row(row):
                     </ALLLEDGERENTRIES.LIST>
 """
 
-        if row.dr_ledger_d != '-':
+        if 'dr_ledger_d' in row and row.dr_ledger_d != '-':
             xml_row += f"""
                     <ALLLEDGERENTRIES.LIST>
                         <LEDGERNAME>{escape(row.dr_ledger_d)}</LEDGERNAME>
@@ -145,7 +145,7 @@ def convert_row(row):
                     </ALLLEDGERENTRIES.LIST>
 """
 
-        if row.dr_ledger_e != '-':
+        if 'dr_ledger_e' in row and row.dr_ledger_e != '-':
             xml_row += f"""
                     <ALLLEDGERENTRIES.LIST>
                         <LEDGERNAME>{escape(row.dr_ledger_e)}</LEDGERNAME>
@@ -154,7 +154,7 @@ def convert_row(row):
                     </ALLLEDGERENTRIES.LIST>
 """
 
-        if row.cr_ledger_a != '-':
+        if 'cr_ledger_a' in row and row.cr_ledger_a != '-':
             xml_row += f"""
                     <ALLLEDGERENTRIES.LIST>
                         <LEDGERNAME>{escape(row.cr_ledger_a)}</LEDGERNAME>
@@ -163,7 +163,7 @@ def convert_row(row):
                     </ALLLEDGERENTRIES.LIST>
 """
 
-        if row.cr_ledger_b != '-':
+        if 'cr_ledger_b' in row and row.cr_ledger_b != '-':
             xml_row += f"""
                     <ALLLEDGERENTRIES.LIST>
                         <LEDGERNAME>{escape(row.cr_ledger_b)}</LEDGERNAME>
@@ -172,7 +172,7 @@ def convert_row(row):
                     </ALLLEDGERENTRIES.LIST>
 """
 
-        if row.cr_ledger_c != '-':
+        if 'cr_ledger_c' in row and row.cr_ledger_c != '-':
             xml_row += f"""
                     <ALLLEDGERENTRIES.LIST>
                         <LEDGERNAME>{escape(row.cr_ledger_c)}</LEDGERNAME>
@@ -181,7 +181,7 @@ def convert_row(row):
                     </ALLLEDGERENTRIES.LIST>
 """
 
-        if row.cr_ledger_d != '-':
+        if 'cr_ledger_d' in row and row.cr_ledger_d != '-':
             xml_row += f"""
                     <ALLLEDGERENTRIES.LIST>
                         <LEDGERNAME>{escape(row.cr_ledger_d)}</LEDGERNAME>
@@ -190,7 +190,7 @@ def convert_row(row):
                     </ALLLEDGERENTRIES.LIST>
 """
 
-        if row.cr_ledger_e != '-':
+        if 'cr_ledger_e' in row and row.cr_ledger_e != '-':
             xml_row += f"""
                     <ALLLEDGERENTRIES.LIST>
                         <LEDGERNAME>{escape(row.cr_ledger_e)}</LEDGERNAME>
