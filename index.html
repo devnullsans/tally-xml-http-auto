@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="script.js" defer></script>
+    <title>Document</title>
+    <style>
+      .fl-row-around {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+      }
+      .fl-row-stretch {
+        margin-block-start: 1em;
+        margin-block-end: 1em;
+        display: flex;
+        align-items: center;
+        justify-content: stretch;
+      }
+      .fl-row-stretch > input {
+        margin-left: 1rem;
+        flex: 1 1 90%;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <fieldset class="fl-row-around">
+        <select name="imptype" required>
+          <option value="masters">Masters Import</option>
+          <option value="vouchers">Vouchers Import</option>
+        </select>
+        <input name="csvfile" type="file" accept="text/csv" required />
+        <button>Import</button>
+      </fieldset>
+    </form>
+    <label class="fl-row-stretch">TallyHost: <input type="url" value="http://localhost:9000" /></label>
+    <pre></pre>
+  </body>
+</html>

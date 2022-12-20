@@ -1,16 +1,16 @@
 Entry Date,Voucher Type,Naration,Supplier Invoice No,Invoice Date,Dr Ledger A,Dr Amount A,Cr Ledger A,Cr Amount A,Dr Ledger B,Dr Amount B,Cr Ledger B,Cr Amount B,Dr Ledger C,Dr Amount C,Cr Ledger C,Cr Amount C,Dr Ledger D,Dr Amount D,Cr Ledger D,Cr Amount D,Dr Ledger E,Dr Amount E,Cr Ledger E,Cr Amount E
-08-04-2022,Purchase,05/22-23,15478,05-02-2022,Purchase,"7,000",Society for Innovation,"8,260",Input CGST @18%,630,-,-,Input SGST @18%,630,-,-,-,-,-,-,-,-,-,-
-09-04-2022,Purchase,06/22-23,68465/dfg45,06-02-2022,Purchase,"2,14,000",Society for Innovation,"2,52,520",Input CGST @18%,"19,260",-,-,Input SGST @18%,19260,-,-,-,-,-,-,-,-,-,-
-10-04-2022,Purchase,05/22-24,6875641-fgdf,07-02-2022,Purchase,"1,66,500",Society for Innovation,"1,96,470",Input CGST @18%,"14,985",-,-,Input SGST @18%,14985,-,-,-,-,-,-,-,-,-,-
-07-04-2022,Purchase,01/22-23,6875641-fgdf,08-02-2022,Purchase,"41,139",Society for Innovation,"48,545",Input CGST @18%,"3,703",-,-,Input SGST @18%,3703,-,-,-,-,-,-,-,-,-,-
-20-04-2022,Sales,05/22-29,6875641-fgdf,09-02-2022,Anant Defence Systems Pvt.Ltd.,"5,34,540",Sales,"4,53,000",-,-,Output CGST @18%,"40,770",-,-,Output SGST @18%,"40,770",-,-,-,-,-,-,-,-
-21-04-2022,Sales,06/22-29,6875641-fgdf,10-02-2022,Anant Defence Systems Pvt.Ltd.,"26,196",Sales,"22,200",-,-,Output CGST @18%,"1,998",-,-,Output SGST @18%,"1,998",-,-,-,-,-,-,-,-
-22-04-2022,Sales,05/22-30,6875641-fgdf,11-02-2022,Anant Defence Systems Pvt.Ltd.,"12,272",Sales,"10,400",-,-,Output CGST @18%,936,-,-,Output SGST @18%,936,-,-,-,-,-,-,-,-
-23-04-2022,Sales,06/22-30,65465,12-02-2022,Anant Defence Systems Pvt.Ltd.,118,Sales,100,-,-,Output CGST @18%,9,-,-,Output SGST @18%,9,-,-,-,-,-,-,-,-
-24-04-2022,Sales,05/22-31,65456,13-02-2022,Anant Defence Systems Pvt.Ltd.,"63,484",Sales,"53,800",-,-,Output CGST @18%,"4,842",-,-,Output SGST @18%,"4,842",-,-,-,-,-,-,-,-
-25-04-2022,Receipt,05/22-31,-,-,ICICI Bank,"2,000",Anant Defence Systems Pvt.Ltd.,"1,000",-,-,Society for Innovation,1000,-,-,-,-,-,-,-,-,-,-,-,-
-26-04-2022,Payment,05/22-31,-,-,Anant Defence Systems Pvt.Ltd.,500,ICICI Bank,"1,000",Society for Innovation,500,-,-,-,-,-,-,-,-,-,-,-,-,-,-
-27-05-2022,Contra,11/22-31,-,-,ICICI Bank,"10,000",Axis Bank,"10,000",-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-
-28-05-2022,Journal,skudhskjdf,-,-,Society for Innovation,"20,000",Anant Defence Systems Pvt.Ltd.,"20,000",-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-
-06-06-2022,Debit Note,kdfgljdf,-,-,Society for Innovation,"50,000",Purchase Return,"42,373",-,-,Input CGST @18%,3813.5,-,-,Input SGST @18%,3813.5,-,-,-,-,-,-,-,-
-07-06-2022,Credit Note,dlfkfsdgf656,-,-,Sales Return,"38,136",Anant Defence Systems Pvt.Ltd.,"45,000",Output CGST @18%,3432,-,-,Output SGST @18%,3432,-,-,-,-,-,-,-,-,-,-
+08-04-2022,Purchase,05/22-23,15478,44597,Purchase,7000,Society for Innovation,8260,Input CGST @18%,630,,,Input SGST @18%,630,,,,,,,,,,
+09-04-2022,Purchase,06/22-23,68465/dfg45,44598,Purchase,214000,Society for Innovation,252520,Input CGST @18%,19260,,,Input SGST @18%,19260,,,,,,,,,,
+10-04-2022,Purchase,05/22-24,6875641-fgdf,44599,Purchase,166500,Society for Innovation,196470,Input CGST @18%,14985,,,Input SGST @18%,14985,,,,,,,,,,
+07-04-2022,Purchase,01/22-23,6875641-fgdf,44600,Purchase,41139,Society for Innovation,48545,Input CGST @18%,3703,,,Input SGST @18%,3703,,,,,,,,,,
+20-04-2022,Sales,05/22-29,6875641-fgdf,44601,Anant Defence Systems Pvt.Ltd.,534540,Sales,453000,,,Output CGST @18%,40770,,,Output SGST @18%,40770,,,,,,,,
+21-04-2022,Sales,06/22-29,6875641-fgdf,44602,Anant Defence Systems Pvt.Ltd.,26196,Sales,22200,,,Output CGST @18%,1998,,,Output SGST @18%,1998,,,,,,,,
+22-04-2022,Sales,05/22-30,6875641-fgdf,44603,Anant Defence Systems Pvt.Ltd.,12272,Sales,10400,,,Output CGST @18%,936,,,Output SGST @18%,936,,,,,,,,
+23-04-2022,Sales,06/22-30,65465,44604,Anant Defence Systems Pvt.Ltd.,118,Sales,100,,,Output CGST @18%,9,,,Output SGST @18%,9,,,,,,,,
+24-04-2022,Sales,05/22-31,65456,44605,Anant Defence Systems Pvt.Ltd.,63484,Sales,53800,,,Output CGST @18%,4842,,,Output SGST @18%,4842,,,,,,,,
+25-04-2022,Receipt,05/22-31,,,ICICI Bank,2000,Anant Defence Systems Pvt.Ltd.,1000,,,Society for Innovation,1000,,,,,,,,,,,,
+26-04-2022,Payment,05/22-31,,,Anant Defence Systems Pvt.Ltd.,500,ICICI Bank,1000,Society for Innovation,500,,,,,,,,,,,,,,
+27-05-2022,Contra,11/22-31,,,ICICI Bank,10000,Axis Bank,10000,,,,,,,,,,,,,,,,
+28-05-2022,Journal,skudhskjdf,,,Society for Innovation,20000,Anant Defence Systems Pvt.Ltd.,20000,,,,,,,,,,,,,,,,
+06-06-2022,Debit Note,kdfgljdf,,,Society for Innovation,50000,Purchase Return,42373,,,Input CGST @18%,3813.5,,,Input SGST @18%,3813.5,,,,,,,,
+07-06-2022,Credit Note,dlfkfsdgf656,,,Sales Return,38136,Anant Defence Systems Pvt.Ltd.,45000,Output CGST @18%,3432,,,Output SGST @18%,3432,,,,,,,,,,

@@ -1,18 +1,18 @@
 Ledger Name,Group,Opening Balance,Maintain Bill by Bill,IS GST Applicable,GST Registration Type,Party GSTIN,Address A,Address B,Address C,Address D,Country,State
 Anant Defence Systems Pvt.Ltd.,Sundry Debtors,50000,Yes,Yes,Regular,27AALFD0074E1ZO,djkfhkjsdf,djkfhkjsdf,djkfhkjsdf,djkfhkjsdf,India,Maharashtra
 IIT Pallakad,Sundry Debtors,-35158,Yes,Yes,Regular,27AALFD0074E1ZO,kjsdfhjksd,kjsdfhjksd,kjsdfhjksd,kjsdfhjksd,India,Gujarat
-Micro India Engineering,Sundry Debtors,35465,Yes,Yes,Regular,29AAACK4409J1ZG,slfdknsdf,slfdknsdf,-,-,India,Gujarat
-PYN Autocomp Pvt Ltd,Sundry Debtors,578,Yes,Yes,Regular,29AAACK4409J1ZG,slfdknsdf,slfdknsdf,-,-,India,Gujarat
+Micro India Engineering,Sundry Debtors,35465,Yes,Yes,Regular,29AAACK4409J1ZG,slfdknsdf,slfdknsdf,,,India,Gujarat
+PYN Autocomp Pvt Ltd,Sundry Debtors,578,Yes,Yes,Regular,29AAACK4409J1ZG,slfdknsdf,slfdknsdf,,,India,Gujarat
 Revathy P,Sundry Creditors,546513,Yes,Yes,Regular,29AAACK4409J1ZG,slfdknsdf,slfdknsdf,slfdknsdf,slfdknsdf,India,Gujarat
 Society for Innovation,Sundry Creditors,5484,Yes,Yes,Regular,29AAACK4409J1ZG,slfdknsdf,slfdknsdf,slfdknsdf,slfdknsdf,India,Maharashtra
-Terettaz Informatique AG,Sundry Creditors,-45851,No,No,-,-,-,-,-,-,-,-
-Input CGST @18%,Duties & Taxes,0,-,-,-,-,-,-,-,-,-,-
-Output CGST @18%,Duties & Taxes,0,-,-,-,-,-,-,-,-,-,-
-Input SGST @18%,Duties & Taxes,0,-,-,-,-,-,-,-,-,-,-
-Output SGST @18%,Duties & Taxes,0,-,-,-,-,-,-,-,-,-,-
-ICICI Bank,Bank Accounts,0,-,-,-,-,-,-,-,-,-,-
-Purchase,Purchase Accounts,0,-,-,-,-,-,-,-,-,-,-
-Sales,Sales Accounts,0,-,-,-,-,-,-,-,-,-,-
-Axis Bank,Bank Accounts,0,-,-,-,-,-,-,-,-,-,-
-Purchase Return,Purchase Accounts,0,-,-,-,-,-,-,-,-,-,-
-Sales Return,Sales Accounts,0,-,-,-,-,-,-,-,-,-,-
+Terettaz Informatique AG,Sundry Creditors,-45851,No,No,,,,,,,,
+Input CGST @18%,Duties & Taxes,0,,,,,,,,,,
+Output CGST @18%,Duties & Taxes,0,,,,,,,,,,
+Input SGST @18%,Duties & Taxes,0,,,,,,,,,,
+Output SGST @18%,Duties & Taxes,0,,,,,,,,,,
+ICICI Bank,Bank Accounts,0,,,,,,,,,,
+Purchase,Purchase Accounts,0,,,,,,,,,,
+Sales,Sales Accounts,0,,,,,,,,,,
+Axis Bank,Bank Accounts,0,,,,,,,,,,
+Purchase Return,Purchase Accounts,0,,,,,,,,,,
+Sales Return,Sales Accounts,0,,,,,,,,,,
