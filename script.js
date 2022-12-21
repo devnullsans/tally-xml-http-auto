@@ -1,4 +1,4 @@
-addEventListener("DOMContentLoaded", function () {
+(function () {
   let host = "http://localhost:9000";
   const anchor = document.getElementById("concat-link");
   const button = document.getElementById("import-submit");
@@ -10,24 +10,35 @@ addEventListener("DOMContentLoaded", function () {
     anchor.removeAttribute("download");
     anchor.removeAttribute("href");
     const { csvfile } = Object.fromEntries(new FormData(event.target).entries());
-    const lines = (await csvfile.text()).split(/\r?\n/);
-    let prevLine = "";
+    const lines = await parseCSVFile(csvfile);
     const joined = [];
+    let currentLine;
     for (const line of lines) {
-      const index = line.indexOf(",");
-      const date = line.slice(0, index);
-      const rest = line.slice(index + 1);
-      if (index === -1) {
-        joined.push(prevLine + '"');
-      } else if (date) {
-        joined.push(prevLine + '"');
-        prevLine = `${date},"${rest.replaceAll(/"/g, "")}`;
+      const [date, rest] = line;
+      if (date) {
+        if (Array.isArray(currentLine)) joined.push(currentLine);
+        currentLine = [date, rest];
       } else {
-        prevLine += rest.replaceAll(/"/g, "");
+        currentLine[1] += rest;
       }
     }
+    if (Array.isArray(currentLine)) joined.push(currentLine);
     anchor.setAttribute("download", "joined.csv");
-    anchor.setAttribute("href", "data:text/csv;charset=utf-8," + encodeURIComponent(joined.slice(1).join("\r\n")));
+    anchor.setAttribute(
+      "href",
+      "data:text/csv;charset=utf-8," +
+        encodeURIComponent(
+          Papa.unparse(joined, {
+            quotes: false,
+            quoteChar: '"',
+            escapeChar: '"',
+            delimiter: ",",
+            header: false,
+            newline: "\r\n",
+            skipEmptyLines: true
+          })
+        )
+    );
   });
   document.getElementById("import-form").addEventListener("submit", (event) => {
     event.preventDefault();
@@ -37,13 +48,13 @@ addEventListener("DOMContentLoaded", function () {
       case "masters":
         importMasters(csvfile)
           .then(() => alert(`Seems OK but can't say for sure !`))
-          .catch((e) => alert(`Error: ${e.message}`))
+          .catch((e) => alert(e.message))
           .finally(() => (button.disabled = false));
         break;
       case "vouchers":
         importVouchers(csvfile)
           .then(() => alert(`Seems OK but can't say for sure !`))
-          .catch((e) => alert(`Error: ${e.message}`))
+          .catch((e) => alert(e.message))
           .finally(() => (button.disabled = false));
         break;
       default:
@@ -52,10 +63,7 @@ addEventListener("DOMContentLoaded", function () {
     }
   });
   async function importMasters(csvfile) {
-    const lines = (await csvfile.text())
-      .split(/\r?\n/)
-      .slice(1, -1)
-      .map((line) => line.split(","));
+    const lines = (await parseCSVFile(csvfile)).slice(1);
     await fetch(host, {
       method: "POST",
       mode: "no-cors",
@@ -85,10 +93,7 @@ addEventListener("DOMContentLoaded", function () {
     });
   }
   async function importVouchers(csvfile) {
-    const lines = (await csvfile.text())
-      .split(/\r?\n/)
-      .slice(1, -1)
-      .map((line) => line.split(","));
+    const lines = (await parseCSVFile(csvfile)).slice(1);
     await fetch(host, {
       method: "POST",
       mode: "no-cors",
@@ -159,4 +164,21 @@ addEventListener("DOMContentLoaded", function () {
       .replaceAll('"', "&quot;")
       .replaceAll("'", "&apos;");
   }
-});
+  function parseCSVFile(file) {
+    return new Promise((resolve, reject) => {
+      Papa.parse(file, {
+        skipEmptyLines: true,
+        error: (error) => reject(error),
+        complete: ({ data, errors }, { name, type }) => {
+          if (errors.length > 0)
+            reject(
+              `Error parsing file: ${name} of type: ${type} => ${errors.map(
+                ({ code, row }) => `${code} at ${row + 1}`
+              )}`
+            );
+          else resolve(data);
+        }
+      });
+    });
+  }
+})();
