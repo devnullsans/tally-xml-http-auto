@@ -2,9 +2,39 @@
   let host = "http://localhost:9000";
   const anchor = document.getElementById("concat-link");
   const button = document.getElementById("import-submit");
+  const verifyop = document.getElementById("verify-op");
   document
     .getElementById("host-input")
     .addEventListener("input", (event) => (host = event.target.value), { passive: true });
+  document.getElementById("verify-form").addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const { csvvoucher, csvmaster } = Object.fromEntries(new FormData(event.target).entries());
+    const vouchers = (await parseCSVFile(csvvoucher)).slice(1);
+    const notes = new Set();
+    for (const voucher of vouchers) {
+      if (Boolean(voucher[5])) notes.add(voucher[5]);
+      if (Boolean(voucher[7])) notes.add(voucher[7]);
+      if (Boolean(voucher[9])) notes.add(voucher[9]);
+      if (Boolean(voucher[11])) notes.add(voucher[11]);
+      if (Boolean(voucher[13])) notes.add(voucher[13]);
+      if (Boolean(voucher[15])) notes.add(voucher[15]);
+      if (Boolean(voucher[17])) notes.add(voucher[17]);
+      if (Boolean(voucher[19])) notes.add(voucher[19]);
+      if (Boolean(voucher[21])) notes.add(voucher[21]);
+      if (Boolean(voucher[23])) notes.add(voucher[23]);
+    }
+    const ledgers = new Set((await parseCSVFile(csvmaster)).map((l) => l[0]));
+    for (const note of notes) {
+      const p = document.createElement("p");
+      p.innerText = note;
+      if (ledgers.has(note)) {
+        p.style.color = "#000000";
+      } else {
+        p.style.color = "#ff0000";
+      }
+      verifyop.appendChild(p);
+    }
+  });
   document.getElementById("concat-form").addEventListener("submit", async (event) => {
     event.preventDefault();
     anchor.removeAttribute("download");

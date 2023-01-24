@@ -1,0 +1,39 @@
+.fl-main {
+  display: flex;
+}
+
+.fl-col {
+  padding: 1em;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: stretch;
+}
+
+section.fl-col {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.lnks {
+  padding-right: 2em;
+}
+
+.fl-row {
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  display: flex;
+  align-items: center;
+}
+
+.fl-row.around {
+  justify-content: space-around;
+}
+
+.fl-row.stretch {
+  justify-content: stretch;
+}
+
+.fl-row.stretch > input {
+  margin-left: 1rem;
+  flex: 1 1 90%;
+}
