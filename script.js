@@ -24,6 +24,7 @@
       if (Boolean(voucher[23])) notes.add(voucher[23]);
     }
     const ledgers = new Set((await parseCSVFile(csvmaster)).map((l) => l[0]));
+    verifyop.innerHTML = "";
     for (const note of notes) {
       const p = document.createElement("p");
       p.innerText = note;
@@ -34,6 +35,7 @@
       }
       verifyop.appendChild(p);
     }
+    alert(`Checked ${notes.size} Unique Ledgers in ${ledgers.size} Tally Ledgers.`);
   });
   document.getElementById("concat-form").addEventListener("submit", async (event) => {
     event.preventDefault();
