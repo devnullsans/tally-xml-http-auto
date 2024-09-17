@@ -1,0 +1,6 @@
+Voucher Details,,,,,Masters,,,,Inventory,,
+Entry Date,Voucher Type,Naration,Supplier Invoice No,Invoice Date,Dr Ledger,Dr Amount,Cr Ledger,Cr Amount,Item Name,Qty,Rate
+01-08-2024,Sales,05/22-29,687,01-08-2024,Aarti Pol,460000,Computer Sale,460000,Computer I5,5,50000
+,,,,,,,,,Computer I7,3,70000
+01-08-2024,Purchase,05/22-29,4875,01-08-2024,Computer Purchase,450000,Aarti Pol,450000,Computer I5,4,60000
+,,,,,,,,,Computer I7,3,70000
