@@ -2,12 +2,22 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="favicon.ico" />
-    <link rel="stylesheet" href="styles.css" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      href="favicon.ico" />
+    <link
+      rel="stylesheet"
+      href="styles.css" />
     <title>Move2Web</title>
-    <script src="parser.js" async></script>
-    <script src="script.js" defer></script>
+    <script
+      src="parser.js"
+      async></script>
+    <script
+      src="script.js"
+      defer></script>
   </head>
   <body>
     <noscript>Please Enable Javascript</noscript>
@@ -15,21 +25,35 @@
       <section class="fl-col">
         <div class="fl-row stretch">
           <label for="host-input">TallyHost:</label>
-          <input id="host-input" type="url" value="http://localhost:9000" />
+          <input
+            id="host-input"
+            type="url"
+            value="http://localhost:9000" />
         </div>
         <form id="import-form">
           <fieldset class="fl-row around">
-            <select name="imptype" required>
+            <select
+              name="imptype"
+              required>
               <option value="masters">Masters Import</option>
               <option value="vouchers">Vouchers Import</option>
+              <option value="inventory">Vouchers with Inventories</option>
             </select>
-            <input name="csvfile" type="file" accept="text/csv" required />
+            <input
+              name="csvfile"
+              type="file"
+              accept="text/csv"
+              required />
             <button id="import-submit">Import</button>
           </fieldset>
         </form>
         <form id="concat-form">
           <fieldset class="fl-row around">
-            <input name="csvfile" type="file" accept="text/csv" required />
+            <input
+              name="csvfile"
+              type="file"
+              accept="text/csv"
+              required />
             <button>Convert</button>
             <a id="concat-link">Download</a>
           </fieldset>
@@ -38,11 +62,19 @@
           <fieldset class="fl-row around">
             <label>
               Vouchers:
-              <input name="csvvoucher" type="file" accept="text/csv" required />
+              <input
+                name="csvvoucher"
+                type="file"
+                accept="text/csv"
+                required />
             </label>
             <label>
               TallyMasters:
-              <input name="csvmaster" type="file" accept="text/csv" required />
+              <input
+                name="csvmaster"
+                type="file"
+                accept="text/csv"
+                required />
             </label>
             <button>Check</button>
           </fieldset>
@@ -51,19 +83,44 @@
       </section>
       <ul class="lnks">
         <li>
-          <a class="as-link" href="/masters.csv" download="masters.csv" target="_blank" rel="noopener noreferrer"
-            >Download Masters</a
-          >
+          <a
+            class="as-link"
+            href="/masters.csv"
+            download="masters.csv"
+            target="_blank"
+            rel="noopener noreferrer">
+            Download Masters
+          </a>
         </li>
         <li>
-          <a class="as-link" href="/vouchers.csv" download="vouchers.csv" target="_blank" rel="noopener noreferrer"
-            >Download Vouchers</a
-          >
+          <a
+            class="as-link"
+            href="/voucherswithinventory.csv"
+            download="voucherswithinventory.csv"
+            target="_blank"
+            rel="noopener noreferrer">
+            Download Vouchers with Inventory
+          </a>
         </li>
         <li>
-          <a class="as-link" href="/concat.csv" download="concat.csv" target="_blank" rel="noopener noreferrer"
-            >Download Concat</a
-          >
+          <a
+            class="as-link"
+            href="/vouchers.csv"
+            download="vouchers.csv"
+            target="_blank"
+            rel="noopener noreferrer">
+            Download Vouchers
+          </a>
+        </li>
+        <li>
+          <a
+            class="as-link"
+            href="/concat.csv"
+            download="concat.csv"
+            target="_blank"
+            rel="noopener noreferrer">
+            Download Concat
+          </a>
         </li>
         <li>
           <a
@@ -71,9 +128,9 @@
             href="/tallymasters.csv"
             download="tallymasters.csv"
             target="_blank"
-            rel="noopener noreferrer"
-            >Download TallyMasters</a
-          >
+            rel="noopener noreferrer">
+            Download TallyMasters
+          </a>
         </li>
       </ul>
     </main>

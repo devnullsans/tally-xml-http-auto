@@ -67,7 +67,7 @@
             delimiter: ",",
             header: false,
             newline: "\r\n",
-            skipEmptyLines: true
+            skipEmptyLines: true,
           })
         )
     );
@@ -89,6 +89,12 @@
           .catch((e) => alert(e.message))
           .finally(() => (button.disabled = false));
         break;
+      case "inventory":
+        importVouchersWithInventories(csvfile)
+          .then(() => alert(`Seems OK but can't say for sure !`))
+          .catch((e) => alert(e.message))
+          .finally(() => (button.disabled = false));
+        break;
       default:
         alert(`Invalid import type "${imptype}"`);
         break;
@@ -103,7 +109,9 @@
       body: `<ENVELOPE><HEADER><VERSION>1</VERSION><TALLYREQUEST>Import</TALLYREQUEST><TYPE>Data</TYPE><ID>All Masters</ID></HEADER><BODY><DESC><STATICVARIABLES><IMPORTDUPS>@@DUPIGNORE</IMPORTDUPS></STATICVARIABLES></DESC><DATA><TALLYMESSAGE>${lines
         .map(
           (line) =>
-            `<LEDGER NAME="${escSpecial(line[0])}" ACTION="Create"><ADDRESS.LIST TYPE="String"><ADDRESS>${escSpecial(
+            `<LEDGER NAME="${escSpecial(
+              line[0]
+            )}" ACTION="Create"><ADDRESS.LIST TYPE="String"><ADDRESS>${escSpecial(
               line[7]
             )}</ADDRESS><ADDRESS>${escSpecial(line[8])}</ADDRESS><ADDRESS>${escSpecial(
               line[9]
@@ -111,17 +119,19 @@
               line[0]
             )}</NAME><PARENT>${escSpecial(line[1])}</PARENT><OPENINGBALANCE>${escSpecial(
               line[2]
-            )}</OPENINGBALANCE><LEDSTATENAME>${escSpecial(line[12])}</LEDSTATENAME><ISBILLWISEON>${escSpecial(
+            )}</OPENINGBALANCE><LEDSTATENAME>${escSpecial(
+              line[12]
+            )}</LEDSTATENAME><ISBILLWISEON>${escSpecial(
               line[3]
             )}</ISBILLWISEON><GSTREGISTRATIONTYPE>${escSpecial(
               line[5]
-            )}</GSTREGISTRATIONTYPE><ISGSTAPPLICABLE>${escSpecial(line[4])}</ISGSTAPPLICABLE><PARTYGSTIN>${escSpecial(
-              line[6]
-            )}</PARTYGSTIN><COUNTRYNAME>${escSpecial(line[11])}</COUNTRYNAME><COUNTRYOFRESIDENCE>${escSpecial(
+            )}</GSTREGISTRATIONTYPE><ISGSTAPPLICABLE>${escSpecial(
+              line[4]
+            )}</ISGSTAPPLICABLE><PARTYGSTIN>${escSpecial(line[6])}</PARTYGSTIN><COUNTRYNAME>${escSpecial(
               line[11]
-            )}</COUNTRYOFRESIDENCE></LEDGER>`
+            )}</COUNTRYNAME><COUNTRYOFRESIDENCE>${escSpecial(line[11])}</COUNTRYOFRESIDENCE></LEDGER>`
         )
-        .join("")}</TALLYMESSAGE></DATA></BODY></ENVELOPE>`
+        .join("")}</TALLYMESSAGE></DATA></BODY></ENVELOPE>`,
     });
   }
   async function importVouchers(csvfile) {
@@ -133,11 +143,13 @@
       body: `<ENVELOPE><HEADER><VERSION>1</VERSION><TALLYREQUEST>Import</TALLYREQUEST><TYPE>Data</TYPE><ID>Vouchers</ID></HEADER><BODY><DESC><STATICVARIABLES><IMPORTDUPS>@@DUPIGNORE</IMPORTDUPS></STATICVARIABLES></DESC><DATA>${lines
         .map(
           (line) =>
-            `<TALLYMESSAGE><VOUCHER VCHTYPE="${escSpecial(line[1])}" ACTION="Create"><VOUCHERTYPENAME>${escSpecial(
+            `<TALLYMESSAGE><VOUCHER VCHTYPE="${escSpecial(
               line[1]
-            )}</VOUCHERTYPENAME><DATE>${escSpecial(line[0])}</DATE><REFERENCEDATE>${escSpecial(
-              line[4]
-            )}</REFERENCEDATE><NARRATION>${escSpecial(line[2])}</NARRATION><REFERENCE>${escSpecial(
+            )}" ACTION="Create"><VOUCHERTYPENAME>${escSpecial(line[1])}</VOUCHERTYPENAME><DATE>${escSpecial(
+              line[0]
+            )}</DATE><REFERENCEDATE>${escSpecial(line[4])}</REFERENCEDATE><NARRATION>${escSpecial(
+              line[2]
+            )}</NARRATION><REFERENCE>${escSpecial(
               line[3]
             )}</REFERENCE><VOUCHERNUMBER></VOUCHERNUMBER>${getLedgerEntries(
               escSpecial(line[1]),
@@ -146,18 +158,68 @@
                 [escSpecial(line[11]), escSpecial(line[12])],
                 [escSpecial(line[15]), escSpecial(line[16])],
                 [escSpecial(line[19]), escSpecial(line[20])],
-                [escSpecial(line[23]), escSpecial(line[24])]
+                [escSpecial(line[23]), escSpecial(line[24])],
               ],
               [
                 [escSpecial(line[5]), escSpecial(line[6])],
                 [escSpecial(line[9]), escSpecial(line[10])],
                 [escSpecial(line[13]), escSpecial(line[14])],
                 [escSpecial(line[17]), escSpecial(line[18])],
-                [escSpecial(line[21]), escSpecial(line[22])]
+                [escSpecial(line[21]), escSpecial(line[22])],
               ]
             )}</VOUCHER></TALLYMESSAGE>`
         )
-        .join("")}</DATA></BODY></ENVELOPE>`
+        .join("")}</DATA></BODY></ENVELOPE>`,
+    });
+  }
+  async function importVouchersWithInventories(csvfile) {
+    const lines = (await parseCSVFile(csvfile)).slice(2);
+
+    const data = [];
+    for (const line of lines) {
+      const [entryDt, typeV, naration, invNo, invDt, dl, da, cl, ca, item, qty, rate] = line;
+      if (typeV) {
+        data.push({
+          entryDt,
+          typeV,
+          naration,
+          invNo,
+          invDt,
+          dl,
+          da,
+          cl,
+          ca,
+          invList: [{ item, qty: +qty, rate: +rate }],
+        });
+      } else {
+        const { invList = [] } = data.at(-1) ?? {};
+        invList.push({ item, qty: +qty, rate: +rate });
+      }
+    }
+
+    await fetch(host, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-type": "text/xml;charset=UTF-8", Accept: "text/xml" },
+      body: `<ENVELOPE><HEADER><VERSION>1</VERSION><TALLYREQUEST>Import</TALLYREQUEST><TYPE>Data</TYPE><ID>Vouchers</ID></HEADER><BODY><DESC><STATICVARIABLES><IMPORTDUPS>@@DUPIGNORE</IMPORTDUPS></STATICVARIABLES></DESC><DATA>${data
+        .map(
+          (line) =>
+            `<TALLYMESSAGE><VOUCHER VCHTYPE="${escSpecial(
+              line["typeV"]
+            )}" ACTION="Create"><VOUCHERTYPENAME>${escSpecial(
+              line["typeV"]
+            )}</VOUCHERTYPENAME><DATE>${escSpecial(line["entryDt"])}</DATE><REFERENCEDATE>${escSpecial(
+              line["invDt"]
+            )}</REFERENCEDATE><NARRATION>${escSpecial(line["naration"])}</NARRATION><REFERENCE>${escSpecial(
+              line["invNo"]
+            )}</REFERENCE><VOUCHERNUMBER></VOUCHERNUMBER>${getLedgerEntriesWithInventory(
+              escSpecial(line["typeV"]),
+              { name: line["cl"], amount: line["ca"] },
+              { name: line["dl"], amount: line["da"] },
+              line["invList"]
+            )}</VOUCHER></TALLYMESSAGE>`
+        )
+        .join("")}</DATA></BODY></ENVELOPE>`,
     });
   }
   function getLedgerEntries(type, credits, debits) {
@@ -182,11 +244,55 @@
         throw new Error(`Unknown Ledger Type ${type}`);
     }
   }
+
+  function getLedgerEntriesWithInventory(type, credit, debit, invL) {
+    switch (type) {
+      case "Purchase":
+        return (
+          getCreditEntry(credit.name, credit.amount) +
+          getPurchaseInventories(debit.name, debit.amount, invL)
+        );
+      case "Sales":
+        return (
+          getDebitEntry(debit.name, debit.amount) + getSalesInventories(credit.name, credit.amount, invL)
+        );
+      default:
+        throw new Error(`Unknown Ledger Type ${type}`);
+    }
+  }
   function getCreditEntry(name, amount) {
     return `<ALLLEDGERENTRIES.LIST><LEDGERNAME>${name}</LEDGERNAME><ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE><AMOUNT>${amount}</AMOUNT></ALLLEDGERENTRIES.LIST>`;
   }
   function getDebitEntry(name, amount) {
     return `<ALLLEDGERENTRIES.LIST><LEDGERNAME>${name}</LEDGERNAME><ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE><AMOUNT>-${amount}</AMOUNT></ALLLEDGERENTRIES.LIST>`;
+  }
+  function getPurchaseInventories(name, amount, invs) {
+    return `<ALLLEDGERENTRIES.LIST><LEDGERNAME>${name}</LEDGERNAME><ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>${invs
+      .map(
+        (inv) =>
+          `<INVENTORYALLOCATIONS.LIST><STOCKITEMNAME>${
+            inv.item
+          }</STOCKITEMNAME><ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE><ISLASTDEEMEDPOSITIVE>Yes</ISLASTDEEMEDPOSITIVE><ISPRIMARYITEM>No</ISPRIMARYITEM><RATE>${inv.rate.toFixed(
+            2
+          )}/No</RATE><AMOUNT>-${(inv.qty * inv.rate).toFixed(2)}</AMOUNT><ACTUALQTY>${
+            inv.qty
+          } No</ACTUALQTY><BILLEDQTY>${inv.qty} No</BILLEDQTY></INVENTORYALLOCATIONS.LIST>`
+      )
+      .join("")}</ALLLEDGERENTRIES.LIST>`;
+  }
+  function getSalesInventories(name, amount, invs) {
+    return `<ALLLEDGERENTRIES.LIST><LEDGERNAME>${name}</LEDGERNAME><ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>${invs
+      .map(
+        (inv) =>
+          `<INVENTORYALLOCATIONS.LIST><STOCKITEMNAME>${
+            inv.item
+          }</STOCKITEMNAME><ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE><ISLASTDEEMEDPOSITIVE>No</ISLASTDEEMEDPOSITIVE><ISPRIMARYITEM>No</ISPRIMARYITEM><RATE>${inv.rate.toFixed(
+            2
+          )}/No</RATE><AMOUNT>${(inv.qty * inv.rate).toFixed(2)}</AMOUNT><ACTUALQTY>${
+            inv.qty
+          } No</ACTUALQTY><BILLEDQTY>${inv.qty} No</BILLEDQTY></INVENTORYALLOCATIONS.LIST>`
+      )
+      .join("")}</ALLLEDGERENTRIES.LIST>`;
   }
   function escSpecial(string) {
     return string
@@ -200,7 +306,7 @@
     return new Promise((resolve, reject) => {
       Papa.parse(file, {
         skipEmptyLines: true,
-        error: (error) => reject(error),
+        error: reject,
         complete: ({ data, errors }, { name, type }) => {
           if (errors.length > 0)
             reject(
@@ -209,7 +315,7 @@
               )}`
             );
           else resolve(data);
-        }
+        },
       });
     });
   }
