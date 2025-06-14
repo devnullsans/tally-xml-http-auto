@@ -1,0 +1,29 @@
+Item Name,
+Group,
+GST Applicable,
+Type of Supply,
+Opening Quantity,
+Rate,
+Units Symbol,
+Description,
+HSN/SAC,
+Calculation type,
+Taxability,
+Integrated Tax Rate
+
+Computer I12,
+,
+Applicable,
+Goods,
+400,
+22500,
+Nos,
+,
+457865,
+On Value,
+Taxable,
+18
+
+
+
+Computer I17,,,Goods,300,30000,Nos,,457868,On Value,,

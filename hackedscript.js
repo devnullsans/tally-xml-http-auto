@@ -59,17 +59,17 @@
     anchor.setAttribute(
       "href",
       "data:text/csv;charset=utf-8," +
-        encodeURIComponent(
-          Papa.unparse(joined, {
-            quotes: false,
-            quoteChar: '"',
-            escapeChar: '"',
-            delimiter: ",",
-            header: false,
-            newline: "\r\n",
-            skipEmptyLines: true,
-          })
-        )
+      encodeURIComponent(
+        Papa.unparse(joined, {
+          quotes: false,
+          quoteChar: '"',
+          escapeChar: '"',
+          delimiter: ",",
+          header: false,
+          newline: "\r\n",
+          skipEmptyLines: true,
+        })
+      )
     );
   });
   document.getElementById("import-form").addEventListener("submit", (event) => {
@@ -95,50 +95,98 @@
           .catch((e) => alert(e.message))
           .finally(() => (button.disabled = false));
         break;
-      case "stockitem":
-        importStockItems(csvfile)
-          .then(() => alert(`Seems OK but can't say for sure !`))
-          .catch((e) => alert(e.message) ?? console.log(e))
-          .finally(() => (button.disabled = false));
-        break;
-
       default:
         alert(`Invalid import type "${imptype}"`);
         break;
     }
   });
-  async function importMasters(csvfile) {
-    const lines = (await parseCSVFile(csvfile)).slice(1);
+  document.getElementById("btn-test").addEventListener("click", async(event) => {
+    event.preventDefault();
     await fetch(host, {
       method: "POST",
       mode: "no-cors",
       headers: { "Content-type": "text/xml;charset=UTF-8", Accept: "text/xml" },
-      body: `<ENVELOPE><HEADER><VERSION>1</VERSION><TALLYREQUEST>Import</TALLYREQUEST><TYPE>Data</TYPE><ID>All Masters</ID></HEADER><BODY><DESC><STATICVARIABLES><IMPORTDUPS>@@DUPIGNORE</IMPORTDUPS></STATICVARIABLES></DESC><DATA><TALLYMESSAGE>${lines
-        .map(
-          (line) =>
-            `<LEDGER NAME="${escSpecial(
-              line[0]
-            )}" ACTION="Create"><ADDRESS.LIST TYPE="String"><ADDRESS>${escSpecial(
-              line[7]
-            )}</ADDRESS><ADDRESS>${escSpecial(line[8])}</ADDRESS><ADDRESS>${escSpecial(
-              line[9]
-            )}</ADDRESS><ADDRESS>${escSpecial(line[10])}</ADDRESS></ADDRESS.LIST><NAME>${escSpecial(
-              line[0]
-            )}</NAME><PARENT>${escSpecial(line[1])}</PARENT><OPENINGBALANCE>${escSpecial(
-              line[2]
-            )}</OPENINGBALANCE><LEDSTATENAME>${escSpecial(
-              line[12]
-            )}</LEDSTATENAME><ISBILLWISEON>${escSpecial(
-              line[3]
-            )}</ISBILLWISEON><GSTREGISTRATIONTYPE>${escSpecial(
-              line[5]
-            )}</GSTREGISTRATIONTYPE><ISGSTAPPLICABLE>${escSpecial(
-              line[4]
-            )}</ISGSTAPPLICABLE><PARTYGSTIN>${escSpecial(line[6])}</PARTYGSTIN><COUNTRYNAME>${escSpecial(
-              line[11]
-            )}</COUNTRYNAME><COUNTRYOFRESIDENCE>${escSpecial(line[11])}</COUNTRYOFRESIDENCE></LEDGER>`
-        )
-        .join("")}</TALLYMESSAGE></DATA></BODY></ENVELOPE>`,
+      body: `<ENVELOPE>
+    <HEADER>
+        <VERSION>1</VERSION>
+        <TALLYREQUEST>Import</TALLYREQUEST>
+        <TYPE>Data</TYPE>
+        <ID>All Masters</ID>
+    </HEADER>
+
+    <BODY>
+        <DESC>
+            <STATICVARIABLES>
+                <IMPORTDUPS>@@DUPIGNORE</IMPORTDUPS>
+            </STATICVARIABLES>
+        </DESC><DATA>
+            <TALLYMESSAGE>
+                <STOCKITEM NAME="Computer I02" RESERVEDNAME="">
+      <PARENT>Computers</PARENT>
+      <GSTAPPLICABLE>&#4; Applicable</GSTAPPLICABLE>
+      <GSTTYPEOFSUPPLY>Goods</GSTTYPEOFSUPPLY>
+      <OPENINGBALANCE> 5000 No</OPENINGBALANCE>
+      <OPENINGRATE>10.00/No</OPENINGRATE>
+      <BASEUNITS>No</BASEUNITS>
+      <GSTDETAILS.LIST>
+       <HSNCODE>45864</HSNCODE>
+       <HSN>Computer</HSN>
+       <TAXABILITY>Taxable</TAXABILITY>
+        <STATENAME>&#4; Any</STATENAME>
+        <RATEDETAILS.LIST>
+         <GSTRATEDUTYHEAD>Integrated Tax</GSTRATEDUTYHEAD>
+         <GSTRATEVALUATIONTYPE>Based on Value</GSTRATEVALUATIONTYPE>
+         <GSTRATE> 18</GSTRATE>
+        </RATEDETAILS.LIST>
+      </GSTDETAILS.LIST>
+      <LANGUAGENAME.LIST>
+       <NAME.LIST TYPE="String">
+        <NAME>Computer I02</NAME>
+       </NAME.LIST>
+       
+      </LANGUAGENAME.LIST>
+     </STOCKITEM>
+           </TALLYMESSAGE>
+        </DATA>
+    </BODY>
+</ENVELOPE>`
+    });
+    console.log("dfjdjk")
+    });
+  async function importMasters(csvfile) {
+    const lines = (await parseCSVFile(csvfile)).slice(1);
+    const data = `<ENVELOPE><HEADER><VERSION>1</VERSION><TALLYREQUEST>Import</TALLYREQUEST><TYPE>Data</TYPE><ID>All Masters</ID></HEADER><BODY><DESC><STATICVARIABLES><IMPORTDUPS>@@DUPIGNORE</IMPORTDUPS></STATICVARIABLES></DESC><DATA><TALLYMESSAGE>${lines
+      .map(
+        (line) =>
+          `<LEDGER NAME="${escSpecial(
+            line[0]
+          )}" ACTION="Create"><ADDRESS.LIST TYPE="String"><ADDRESS>${escSpecial(
+            line[7]
+          )}</ADDRESS><ADDRESS>${escSpecial(line[8])}</ADDRESS><ADDRESS>${escSpecial(
+            line[9]
+          )}</ADDRESS><ADDRESS>${escSpecial(line[10])}</ADDRESS></ADDRESS.LIST><NAME>${escSpecial(
+            line[0]
+          )}</NAME><PARENT>${escSpecial(line[1])}</PARENT><OPENINGBALANCE>${escSpecial(
+            line[2]
+          )}</OPENINGBALANCE><LEDSTATENAME>${escSpecial(
+            line[12]
+          )}</LEDSTATENAME><ISBILLWISEON>${escSpecial(
+            line[3]
+          )}</ISBILLWISEON><GSTREGISTRATIONTYPE>${escSpecial(
+            line[5]
+          )}</GSTREGISTRATIONTYPE><ISGSTAPPLICABLE>${escSpecial(
+            line[4]
+          )}</ISGSTAPPLICABLE><PARTYGSTIN>${escSpecial(line[6])}</PARTYGSTIN><COUNTRYNAME>${escSpecial(
+            line[11]
+          )}</COUNTRYNAME><COUNTRYOFRESIDENCE>${escSpecial(line[11])}</COUNTRYOFRESIDENCE></LEDGER>`
+      )
+      .join("")}</TALLYMESSAGE></DATA></BODY></ENVELOPE>`;
+    console.log(data);
+    await fetch(host, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-type": "text/xml;charset=UTF-8", Accept: "text/xml" },
+      body: data,
     });
   }
   async function importVouchers(csvfile) {
@@ -181,6 +229,7 @@
   }
   async function importVouchersWithInventories(csvfile) {
     const lines = (await parseCSVFile(csvfile)).slice(2);
+    console.log(lines);
 
     const data = [];
     for (const line of lines) {
@@ -203,58 +252,35 @@
         invList.push({ item, qty: +qty, rate: +rate });
       }
     }
+    console.log(data);
+
+    const body = `<ENVELOPE><HEADER><VERSION>1</VERSION><TALLYREQUEST>Import</TALLYREQUEST><TYPE>Data</TYPE><ID>Vouchers</ID></HEADER><BODY><DESC><STATICVARIABLES><IMPORTDUPS>@@DUPIGNORE</IMPORTDUPS></STATICVARIABLES></DESC><DATA>${data
+      .map(
+        (line) =>
+          `<TALLYMESSAGE><VOUCHER VCHTYPE="${escSpecial(
+            line["typeV"]
+          )}" ACTION="Create"><VOUCHERTYPENAME>${escSpecial(
+            line["typeV"]
+          )}</VOUCHERTYPENAME><DATE>${escSpecial(line["entryDt"])}</DATE><REFERENCEDATE>${escSpecial(
+            line["invDt"]
+          )}</REFERENCEDATE><NARRATION>${escSpecial(line["naration"])}</NARRATION><REFERENCE>${escSpecial(
+            line["invNo"]
+          )}</REFERENCE><VOUCHERNUMBER></VOUCHERNUMBER>${getLedgerEntriesWithInventory(
+            escSpecial(line["typeV"]),
+            { name: line["cl"], amount: line["ca"] },
+            { name: line["dl"], amount: line["da"] },
+            line["invList"]
+          )}</VOUCHER></TALLYMESSAGE>`
+      )
+      .join("")}</DATA></BODY></ENVELOPE>`;
+
+    console.log(body);
 
     await fetch(host, {
       method: "POST",
       mode: "no-cors",
       headers: { "Content-type": "text/xml;charset=UTF-8", Accept: "text/xml" },
-      body: `<ENVELOPE><HEADER><VERSION>1</VERSION><TALLYREQUEST>Import</TALLYREQUEST><TYPE>Data</TYPE><ID>Vouchers</ID></HEADER><BODY><DESC><STATICVARIABLES><IMPORTDUPS>@@DUPIGNORE</IMPORTDUPS></STATICVARIABLES></DESC><DATA>${data
-        .map(
-          (line) =>
-            `<TALLYMESSAGE><VOUCHER VCHTYPE="${escSpecial(
-              line["typeV"]
-            )}" ACTION="Create"><VOUCHERTYPENAME>${escSpecial(
-              line["typeV"]
-            )}</VOUCHERTYPENAME><DATE>${escSpecial(line["entryDt"])}</DATE><REFERENCEDATE>${escSpecial(
-              line["invDt"]
-            )}</REFERENCEDATE><NARRATION>${escSpecial(line["naration"])}</NARRATION><REFERENCE>${escSpecial(
-              line["invNo"]
-            )}</REFERENCE><VOUCHERNUMBER></VOUCHERNUMBER>${getLedgerEntriesWithInventory(
-              escSpecial(line["typeV"]),
-              { name: line["cl"], amount: line["ca"] },
-              { name: line["dl"], amount: line["da"] },
-              line["invList"]
-            )}</VOUCHER></TALLYMESSAGE>`
-        )
-        .join("")}</DATA></BODY></ENVELOPE>`,
-    });
-  }
-  async function importStockItems(csvfile) {
-    const lines = (await parseCSVFile(csvfile)).slice(1);
-    await fetch(host, {
-      method: "POST",
-      mode: "no-cors",
-      headers: { "Content-type": "text/xml;charset=UTF-8", Accept: "text/xml" },
-      body: `<ENVELOPE><HEADER><VERSION>1</VERSION><TALLYREQUEST>Import</TALLYREQUEST><TYPE>Data</TYPE><ID>All Masters</ID></HEADER><BODY><DESC><STATICVARIABLES><IMPORTDUPS>@@DUPIGNORE</IMPORTDUPS></STATICVARIABLES></DESC><DATA><TALLYMESSAGE>${lines
-        .map(
-          (line) =>
-            `<STOCKITEM NAME="${escSpecial(line[0])}" RESERVEDNAME=""><PARENT>${escSpecial(
-              line[1]
-            )}</PARENT><GSTAPPLICABLE>${escSpecial(line[2])}</GSTAPPLICABLE><GSTTYPEOFSUPPLY>${escSpecial(
-              line[3]
-            )}</GSTTYPEOFSUPPLY><OPENINGBALANCE>${escSpecial(
-              line[4]
-            )}</OPENINGBALANCE><OPENINGRATE>${escSpecial(line[5])}</OPENINGRATE><BASEUNITS>${escSpecial(
-              line[6]
-            )}</BASEUNITS><GSTDETAILS.LIST><HSNCODE>${escSpecial(line[8])}</HSNCODE><HSN>${escSpecial(
-              line[8]
-            )}</HSN><TAXABILITY>${escSpecial(line[10])}</TAXABILITY><RATEDETAILS.LIST><GSTRATE>${escSpecial(
-              line[11]
-            )}</GSTRATE></RATEDETAILS.LIST></GSTDETAILS.LIST><LANGUAGENAME.LIST><NAME.LIST TYPE="String"><NAME>${escSpecial(
-              line[0]
-            )}</NAME></NAME.LIST></LANGUAGENAME.LIST></STOCKITEM>`
-        )
-        .join("")}</TALLYMESSAGE></DATA></BODY></ENVELOPE>`,
+      body,
     });
   }
   function getLedgerEntries(type, credits, debits) {
@@ -279,16 +305,19 @@
         throw new Error(`Unknown Ledger Type ${type}`);
     }
   }
+
   function getLedgerEntriesWithInventory(type, credit, debit, invL) {
     switch (type) {
       case "Purchase":
         return (
           getCreditEntry(credit.name, credit.amount) +
           getPurchaseInventories(debit.name, debit.amount, invL)
+          // debits.map(([name, amount]) => getDebitEntry(name, amount)).join("")
         );
       case "Sales":
         return (
           getDebitEntry(debit.name, debit.amount) + getSalesInventories(credit.name, credit.amount, invL)
+          // credits.map(([name, amount]) => getCreditEntry(name, amount)).join("")
         );
       default:
         throw new Error(`Unknown Ledger Type ${type}`);
@@ -304,12 +333,10 @@
     return `<ALLLEDGERENTRIES.LIST><LEDGERNAME>${name}</LEDGERNAME><ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>${invs
       .map(
         (inv) =>
-          `<INVENTORYALLOCATIONS.LIST><STOCKITEMNAME>${
-            inv.item
+          `<INVENTORYALLOCATIONS.LIST><STOCKITEMNAME>${inv.item
           }</STOCKITEMNAME><ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE><ISLASTDEEMEDPOSITIVE>Yes</ISLASTDEEMEDPOSITIVE><ISPRIMARYITEM>No</ISPRIMARYITEM><RATE>${inv.rate.toFixed(
             2
-          )}/No</RATE><AMOUNT>-${(inv.qty * inv.rate).toFixed(2)}</AMOUNT><ACTUALQTY>${
-            inv.qty
+          )}/No</RATE><AMOUNT>-${(inv.qty * inv.rate).toFixed(2)}</AMOUNT><ACTUALQTY>${inv.qty
           } No</ACTUALQTY><BILLEDQTY>${inv.qty} No</BILLEDQTY></INVENTORYALLOCATIONS.LIST>`
       )
       .join("")}</ALLLEDGERENTRIES.LIST>`;
@@ -318,12 +345,10 @@
     return `<ALLLEDGERENTRIES.LIST><LEDGERNAME>${name}</LEDGERNAME><ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>${invs
       .map(
         (inv) =>
-          `<INVENTORYALLOCATIONS.LIST><STOCKITEMNAME>${
-            inv.item
+          `<INVENTORYALLOCATIONS.LIST><STOCKITEMNAME>${inv.item
           }</STOCKITEMNAME><ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE><ISLASTDEEMEDPOSITIVE>No</ISLASTDEEMEDPOSITIVE><ISPRIMARYITEM>No</ISPRIMARYITEM><RATE>${inv.rate.toFixed(
             2
-          )}/No</RATE><AMOUNT>${(inv.qty * inv.rate).toFixed(2)}</AMOUNT><ACTUALQTY>${
-            inv.qty
+          )}/No</RATE><AMOUNT>${(inv.qty * inv.rate).toFixed(2)}</AMOUNT><ACTUALQTY>${inv.qty
           } No</ACTUALQTY><BILLEDQTY>${inv.qty} No</BILLEDQTY></INVENTORYALLOCATIONS.LIST>`
       )
       .join("")}</ALLLEDGERENTRIES.LIST>`;
